@@ -14,6 +14,7 @@ module Danger
       end
 
       def self.inherited(child_class)
+        print child_class
         available_request_sources.add child_class
         super
       end
@@ -28,7 +29,7 @@ module Danger
 
       def self.available_source_names_and_envs
         available_request_sources.map do |klass|
-          " - #{klass.source_name}: #{klass.env_vars.join(', '.freeze).yellow}"
+          " - #{klass.source_name}: #{klass.env_vars.join(", ".freeze).yellow}"
         end
       end
 
