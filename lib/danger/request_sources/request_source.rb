@@ -14,7 +14,6 @@ module Danger
       end
 
       def self.inherited(child_class)
-        print child_class
         available_request_sources.add child_class
         super
       end

@@ -41,6 +41,8 @@ module Danger
       end
 
       def validates_as_ci?
+        return true unless self.environment.key? "DANGER_FORCE_GITHUB"
+
         includes_port = self.host.include? ":"
         raise "Port number included in `DANGER_GITLAB_HOST`, this will fail with GitLab CI Runners" if includes_port
 
@@ -133,11 +135,11 @@ module Danger
           delete_old_comments!(danger_id: danger_id)
         else
           body = generate_comment(warnings: warnings,
-                                    errors: errors,
+                                  errors: errors,
                                   messages: messages,
-                                 markdowns: markdowns,
-                       previous_violations: previous_violations,
-                                 danger_id: danger_id,
+                                  markdowns: markdowns,
+                                  previous_violations: previous_violations,
+                                  danger_id: danger_id,
                                   template: "gitlab")
 
           if editable_comments.empty?
@@ -150,7 +152,7 @@ module Danger
               ci_source.repo_slug,
               ci_source.pull_request_id,
               original_id,
-              { body: body }
+              {body: body}
             )
           end
         end

@@ -97,7 +97,7 @@ module Danger
 
       if source
         title = "For your #{source.source_name} repo, you need to expose: " + source.env_vars.join(", ").yellow
-        subtitle = "You may also need: #{source.optional_env_vars.join(', ')}" if source.optional_env_vars.any?
+        subtitle = "You may also need: #{source.optional_env_vars.join(", ")}" if source.optional_env_vars.any?
       else
         title = "For Danger to run on this project, you need to expose a set of following the ENV vars:\n#{RequestSources::RequestSource.available_source_names_and_envs.join("\n")}"
       end
@@ -109,7 +109,7 @@ module Danger
       ui.title "Could not set up API to Code Review site for Danger\n".freeze
       ui.puts title
       ui.puts subtitle
-      ui.puts "\nFound these keys in your ENV: #{env.keys.join(', '.freeze)}."
+      ui.puts "\nFound these keys in your ENV: #{env.keys.join(", ".freeze)}."
       ui.puts "\nFailing the build, Danger cannot run without API access.".freeze
       ui.puts "You can see more information at https://danger.systems/guides/getting_started.html".freeze
     end

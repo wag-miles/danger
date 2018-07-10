@@ -1,6 +1,7 @@
 # http://docs.gitlab.com/ce/ci/variables/README.html
 require "uri"
 require "danger/request_sources/gitlab"
+require "danger/request_sources/gitlab_github"
 
 module Danger
   # ### CI Setup
@@ -25,7 +26,7 @@ module Danger
 
     def self.validates_as_pr?(env)
       exists = [
-        "GITLAB_CI", "CI_PROJECT_PATH"
+        "GITLAB_CI", "CI_PROJECT_PATH",
       ].all? { |x| env[x] }
 
       exists && determine_merge_request_id(env).to_i > 0
@@ -54,7 +55,7 @@ module Danger
     end
 
     def supported_request_sources
-      @supported_request_sources ||= [Danger::RequestSources::GitLab]
+      @supported_request_sources ||= [Danger::RequestSources::GitLab, Danger::RequestSources::GitLabGitHub]
     end
 
     def pull_request_id
